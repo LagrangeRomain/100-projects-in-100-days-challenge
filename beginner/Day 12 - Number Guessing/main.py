@@ -5,6 +5,7 @@ EASY_DIFFICULTY_LIVES = 10
 HARD_DIFFICULTY_LIVES = 5
 
 def set_difficulty():
+    """Determine the lives number based on the player's choice"""
     difficulty = input("Choose a difficulty. Type 'easy' or 'hard':")
     if difficulty == 'easy':
         return EASY_DIFFICULTY_LIVES
@@ -12,6 +13,7 @@ def set_difficulty():
         return HARD_DIFFICULTY_LIVES
 
 def check_guess(actual_guess, actual_answer, actual_lives):
+    """Check if guess is equal to answer or return new lives number"""
     if actual_guess > actual_answer:
         print("Too High.")
         return actual_lives - 1
