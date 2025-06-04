@@ -10,6 +10,7 @@ RIGHT = 0
 class Snake:
     def __init__(self):
         self.segments = []
+        self.segment_size = SEGMENT_SIZE
         self.create_snake()
         self.head = self.segments[0]
 
@@ -17,19 +18,26 @@ class Snake:
         """Create the initial snake with STARTING_SEGMENTS segments."""
         x_position = 0
         for _ in range(STARTING_SEGMENTS):
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(x_position, 0)
-            x_position -= SEGMENT_SIZE
-            self.segments.append(new_segment)
+            position = (x_position, 0)
+            self.add_segment(position)
+            x_position -= self.segment_size
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("Green")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def grow(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         """Move the snake forward by updating each segment's position to the one before it."""
         for seg_num in range(len(self.segments) - 1, 0, -1):
             new_pos = self.segments[seg_num - 1].pos()
             self.segments[seg_num].goto(new_pos)
-        self.head.forward(SEGMENT_SIZE)
+        self.head.forward(self.segment_size)
 
     def can_turn(self, new_heading):
         """Prevent the snake from reversing directly onto itself."""

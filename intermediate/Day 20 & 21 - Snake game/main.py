@@ -4,8 +4,8 @@ from food import Food
 from snake import Snake
 import time
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 600
 
 
 screen = Screen()
@@ -16,7 +16,10 @@ screen.title("Snake Game")
 screen.tracer(0)
 
 snake = Snake()
-food = Food(SCREEN_WIDTH, SCREEN_HEIGHT)
+max_width = SCREEN_WIDTH // 2 - snake.segment_size
+max_height = SCREEN_HEIGHT // 2 - snake.segment_size
+print(-max_width, -max_height)
+food = Food(max_width, max_height)
 
 screen.listen()
 screen.onkey(snake.up,"Up")
@@ -33,6 +36,24 @@ while game_is_on:
     #Detect collision with food
     if snake.head.distance(food) < 15:
         food.refresh_position()
+        snake.grow()
         scoreboard.increase_score()
+
+    #Detect collision with walls
+    if (
+        snake.head.xcor() > max_width or
+        snake.head.xcor() < -max_width or
+        snake.head.ycor() > max_height or
+        snake.head.ycor() < -max_height
+    ):
+        game_is_on = False
+        scoreboard.game_over()
+        print(snake.head.position())
+
+    #Detect collision with tail
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 screen.exitonclick()
