@@ -1,6 +1,5 @@
 import turtle
 import pandas as pd
-from pytz import all_timezones_set
 
 from place_state import PlaceState
 
