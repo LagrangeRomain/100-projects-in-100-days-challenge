@@ -12,7 +12,10 @@ all_states = df.state.to_list()
 
 guessed_states = []
 while len(guessed_states) < 50:
-    answer = screen.textinput(title=f"{len(guessed_states)}/50 States Correct", prompt="What's another state's name?").title()
+    answer = screen.textinput(
+        title=f"{len(guessed_states)}/50 States Correct",
+        prompt="What's another state's name?"
+    ).title()
     if answer == "Exit":
         missing_states = []
         for actual_state in all_states:
